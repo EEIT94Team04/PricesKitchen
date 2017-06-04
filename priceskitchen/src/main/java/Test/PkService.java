@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -52,14 +53,14 @@ public class PkService {
 			/* 放入資料庫時將作物代號換成類別名(Class)寫死 */
 			String jClass = new String((String) result.get("作物代號"));
 			String jUpdate_date = new String((String) result.get("交易日期"));
-			String jPrice_upper = Double.toString((double)result.get("上價"));
-			String jPrice_middle = Double.toString((double) result.get("中價"));
-			String jPrice_bottom = Double.toString((double) result.get("下價"));
-			String jPrice_average = Double.toString((double) result.get("平均價"));
+			Double jPrice_upper = new Double((Double)result.get("上價"));
+			Double jPrice_middle = new Double((Double) result.get("中價"));
+			Double jPrice_bottom = new Double((Double) result.get("下價"));
+			Double jPrice_average = new Double((Double) result.get("平均價"));
 			String market = new String((String) result.get("市場名稱"));
 			/* 資料庫沒有下面兩項資料欄位 */
-			String jtPrice = Double.toString((double) result.get("交易量"));
-			String jmNumb = new String((String) result.get("市場代號"));// (資料庫沒此欄位)
+			//Double jtPrice = new Double((Double) result.get("交易量"));
+			//String jmNumb = new String((String) result.get("市場代號"));// (資料庫沒此欄位)
 			/*
 			 * 蔬菜:[A-Z]{1,3}[0-9]{1,2} 水果:[A-Z]{1}[0-9]{1,3}
 			 * 水果特別編號(("[0-9]{2,4}")): 11 119 12 129 22 229 31 32 30 41 42 43 45
@@ -125,8 +126,8 @@ public class PkService {
 	}
 
 	// 字串轉換浮點數
-	public java.math.BigDecimal converBigDecimal(String temp) {
-		BigDecimal xx = new java.math.BigDecimal(temp);
+	public java.math.BigDecimal converBigDecimal(Double temp) {
+		BigDecimal xx = new java.math.BigDecimal(temp.toString());
 		return xx;
 	}
 
